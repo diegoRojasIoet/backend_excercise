@@ -18,7 +18,7 @@ help: ## Show this help (usage: make help)
 
 .PHONY: build
 build:	## Build project with docker-compose
-	${compose_command} --build -d
+	${compose_command} -f ${docker_compose_file_path} build
 
 .PHONY: up
 up:	## Run all services locally
