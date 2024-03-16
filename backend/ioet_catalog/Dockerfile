@@ -20,4 +20,4 @@ FROM base_image as dev
 
 RUN poetry install --no-root
 
-CMD ["uvicorn", "api.main:api", "--reload", "--host", "0.0.0.0"]
+CMD ["uvicorn", "main:app", "--reload", "--host", "0.0.0.0"]
