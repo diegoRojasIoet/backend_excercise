@@ -6,9 +6,9 @@ authors = ["ioet Inc"]
 
 [tool.poetry.dependencies]
 python = "^3.10.12"
-fastapi = "^0.101.1"
+fastapi = "^0.110.0"
 uvicorn = "^0.23.2"
-pydantic = "^2.2.1"
+pydantic = "^2.6.4"
 sqlalchemy = "^2.0.21"
 psycopg2-binary = "^2.9.9"
 
