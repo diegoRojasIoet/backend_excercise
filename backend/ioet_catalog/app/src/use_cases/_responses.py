@@ -6,7 +6,7 @@ from ..core.enums import ProductStatuses
 
 
 class GetProductResponse(BaseModel):
-    id: str
+    product_id: str
     name: str
     price: Decimal
     status: ProductStatuses

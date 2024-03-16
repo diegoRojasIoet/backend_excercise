@@ -1,5 +1,4 @@
-from app.products.use_cases import (GetProductsCase, GetProductsReponse,
-                                    GetProductsRequest)
+from app.src.use_cases import GetProductsCase, GetProductsRequest, GetProductsResponse
 
 
 class TestGetProductsCase:
@@ -10,5 +9,5 @@ class TestGetProductsCase:
 
         response = use_case(request=request)
 
-        assert isinstance(response, GetProductsReponse)
+        assert isinstance(response, GetProductsResponse)
         assert len(response.products) == expected_products
