@@ -1,7 +1,7 @@
 from typing import List
 from decimal import Decimal
 from pydantic import BaseModel
-
+from app.src import ProductStatuses
 
 class ProductBase(BaseModel):
     product_id: str
@@ -10,7 +10,7 @@ class ProductBase(BaseModel):
     description: str | None
     price: Decimal
     location: str
-    status: str
+    status: ProductStatuses
     is_available: bool
 
 class ListProductResponseDto(BaseModel):
