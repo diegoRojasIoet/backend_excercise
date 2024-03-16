@@ -36,6 +36,10 @@ logs:	## Show logs of all services
 dev_shell:	## Run a dev shell
 	@${compose_command} -f ${docker_compose_file_path} exec ${app_service} bash
 
+.PHONY: tests
+tests:	## Run app tests
+	@${compose_command} -f ${docker_compose_file_path} exec ${app_service} pytest api/tests app/tests
+
 .PHONY: create_dev_env
 create_dev_env:
 	python3 -m venv .venv && \
