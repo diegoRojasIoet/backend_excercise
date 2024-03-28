@@ -25,8 +25,6 @@ class TestEditProducts:
             )
 
         create_use_case = CreateProduct(memory_repository)
-        # import pdb
-        # pdb.set_trace() 
         request = CreateProductRequest(
             product_id=product.product_id,
             user_id=product.user_id,
@@ -54,7 +52,5 @@ class TestEditProducts:
         use_case = EditProduct(memory_repository)
 
         response = use_case(request=request)
-        import pdb
-        pdb.set_trace()
         assert isinstance(response, EditProductResponse)
         assert response.price == expected_price

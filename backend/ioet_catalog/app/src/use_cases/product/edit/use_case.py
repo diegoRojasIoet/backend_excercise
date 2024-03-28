@@ -15,8 +15,6 @@ class EditProduct:
   def __call__(self, request: EditProductRequest) -> Optional[EditProductResponse]:
     try:
       product_existing = self.product_repository.get_by_id(request.product_id)
-      import pdb
-      pdb.set_trace()
       if not product_existing:
         raise ProductNoneException()
       new_product = Product(**request._asdict())
