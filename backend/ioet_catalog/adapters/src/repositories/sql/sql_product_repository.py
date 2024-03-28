@@ -82,3 +82,5 @@ class SQLProductRepository(ProductRepository):
     # Needs Implementation
     pass
 
+  def filter_products_by_status(self, status: str) -> List[Product]:
+    pass
