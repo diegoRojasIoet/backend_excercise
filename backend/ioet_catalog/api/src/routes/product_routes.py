@@ -2,6 +2,7 @@ from typing import List
 
 from fastapi import APIRouter, Depends
 
+from api.src.dtos.product import EditProductRequestDto, EditProductResponseDto
 from app.src.use_cases import (
     ListProducts, 
     ListProductResponse, 
@@ -12,10 +13,12 @@ from app.src.use_cases import (
     CreateProductResponse, 
     CreateProductRequest
 )
+from app.src.use_cases.product.edit.request import EditProductRequest
+from app.src.use_cases.product.edit.use_case import EditProduct
 from app.src.use_cases.product.filter_by_status.request import FilterByStatusRequest
 from app.src.use_cases.product.filter_by_status.response import FilterByStatusResponse
 from app.src.use_cases.product.filter_by_status.use_case import FilterProductsByStatus
-from factories.use_cases.product import filter_product_by_status_use_case
+from factories.use_cases.product import edit_product_use_case, filter_product_by_status_use_case
 from ..dtos import (
     ProductBase,
     ListProductResponseDto, 
@@ -77,3 +80,32 @@ async def filter_products_by_status(
     request = FilterByStatusRequest(status=status)
     response = filter_use_case(request)
     return response
+
+@product_router.put("/", response_model=EditProductResponseDto)
+async def edit_product(
+    request: EditProductRequestDto,
+    use_case: EditProduct = Depends(edit_product_use_case)
+) -> EditProductResponseDto:
+    response = use_case(EditProductRequest(
+        product_id=request.product_id,
+        user_id=request.user_id,         
+        name=request.name, 
+        description=request.description, 
+        price=request.price, 
+        location=request.location, 
+        status=request.status, 
+        is_available=request.is_available
+    ))
+
+    if response:
+        response_dto: EditProductResponseDto = EditProductResponseDto(
+            product_id=response.product_id,
+            user_id=response.user_id,
+            name=response.name,
+            description=response.description,
+            price=response.price,
+            location=response.location,
+            status=response.status.value,
+            is_available=response.is_available
+        )
+        return response_dto

@@ -24,3 +24,9 @@ class CreateProductRequestDto(ProductBase):
 
 class CreateProductResponseDto(ProductBase):
     ...
+
+class EditProductRequestDto(ProductBase):
+    ...
+    
+class EditProductResponseDto(ProductBase):
+    ...

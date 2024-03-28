@@ -12,5 +12,8 @@ from .product import (
   CreateProductRequest,
   FilterProductsByStatus,
   FilterByStatusResponse,
-  FilterByStatusRequest
+  FilterByStatusRequest,
+  EditProductResponse,
+  EditProductRequest,
+  EditProduct
 )
