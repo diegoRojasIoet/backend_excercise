@@ -36,3 +36,10 @@ class MemoryProductRepository(ProductRepository):
   def delete(self, product_id: str) -> Product:
     # Needs Implementation
     pass
+  
+  def filter_products_by_status(self, status: str) -> List[Product]:
+    try:
+        filtered_products = [product for product in self.products if product.status == status]
+        return filtered_products
+    except Exception:
+        raise ProductRepositoryException(method="filter_products_by_status")

@@ -1,6 +1,4 @@
 from decimal import Decimal
-
-from pydantic import BaseModel
 from typing import NamedTuple
 
 
