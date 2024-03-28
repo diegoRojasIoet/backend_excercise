@@ -2,7 +2,8 @@ from typing import List
 
 from fastapi import APIRouter, Depends
 
-from api.src.dtos.product import EditProductRequestDto, EditProductResponseDto
+from api.src.dtos.product import DeleteProductResponseDto, EditProductRequestDto, EditProductResponseDto
+from app.src.exceptions.business.product import ProductBusinessException
 from app.src.use_cases import (
     ListProducts, 
     ListProductResponse, 
@@ -13,12 +14,14 @@ from app.src.use_cases import (
     CreateProductResponse, 
     CreateProductRequest
 )
+from app.src.use_cases.product.delete.request import DeleteProductRequest
+from app.src.use_cases.product.delete.use_case import DeleteProduct
 from app.src.use_cases.product.edit.request import EditProductRequest
 from app.src.use_cases.product.edit.use_case import EditProduct
 from app.src.use_cases.product.filter_by_status.request import FilterByStatusRequest
 from app.src.use_cases.product.filter_by_status.response import FilterByStatusResponse
 from app.src.use_cases.product.filter_by_status.use_case import FilterProductsByStatus
-from factories.use_cases.product import edit_product_use_case, filter_product_by_status_use_case
+from factories.use_cases.product import delete_product_use_case, edit_product_use_case, filter_product_by_status_use_case
 from ..dtos import (
     ProductBase,
     ListProductResponseDto, 
@@ -109,3 +112,16 @@ async def edit_product(
             is_available=response.is_available
         )
         return response_dto
+
+@product_router.delete("/{product_id}", response_model=DeleteProductResponseDto)
+async def delete_product(
+    product_id: str,
+    use_case: DeleteProduct = Depends(delete_product_use_case)
+) -> DeleteProductResponseDto:
+    try:
+        response = use_case(DeleteProductRequest(product_id=product_id))
+        if not response:
+            raise Exception("Failed to delete client")
+        return DeleteProductResponseDto(product_id=response.product_id)
+    except ProductBusinessException as e:
+        raise e

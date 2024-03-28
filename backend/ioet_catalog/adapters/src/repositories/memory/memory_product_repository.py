@@ -41,8 +41,12 @@ class MemoryProductRepository(ProductRepository):
       raise ProductRepositoryException(method="edit")
 
   def delete(self, product_id: str) -> Product:
-    # Needs Implementation
-    pass
+    try:
+      current_product = self.get_by_id(product_id=product_id)
+      self.products.remove(current_product)
+      return current_product
+    except Exception:
+      raise ProductRepositoryException(method="delete")
   
   def filter_products_by_status(self, status: str) -> List[Product]:
     try:
