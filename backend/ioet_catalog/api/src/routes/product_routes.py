@@ -12,6 +12,10 @@ from app.src.use_cases import (
     CreateProductResponse, 
     CreateProductRequest
 )
+from app.src.use_cases.product.filter_by_status.request import FilterByStatusRequest
+from app.src.use_cases.product.filter_by_status.response import FilterByStatusResponse
+from app.src.use_cases.product.filter_by_status.use_case import FilterProductsByStatus
+from factories.use_cases.product import filter_product_by_status_use_case
 from ..dtos import (
     ProductBase,
     ListProductResponseDto, 
@@ -64,3 +68,12 @@ async def create_product(
     ))
     response_dto: CreateProductResponseDto = CreateProductResponseDto(**response._asdict())
     return response_dto
+
+@product_router.get("/filter/by_status", response_model=FilterByStatusResponse)
+async def filter_products_by_status(
+    status: str,
+    filter_use_case: FilterProductsByStatus = Depends(filter_product_by_status_use_case),
+) -> FilterByStatusResponse:
+    request = FilterByStatusRequest(status=status)
+    response = filter_use_case(request)
+    return response
